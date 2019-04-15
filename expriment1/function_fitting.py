@@ -58,7 +58,8 @@ class Net(nn.Module):
 
     def __init__(self):
         super(Net, self).__init__()
-        self.layer = nn.Sequential(nn.Linear(2, 7), nn.Sigmoid(), nn.Linear(7, 1))
+        self.layer = nn.Sequential(nn.Linear(2, 16), nn.ReLU(), nn.Linear(16, 32), nn.ReLU(), nn.Linear(32, 1))
+        # self.layer = nn.Sequential(nn.Linear(2, 7), nn.Sigmoid(), nn.Linear(7, 1))
 
         for m in self.layer.modules():
             if isinstance(m, nn.Linear):
@@ -77,7 +78,7 @@ net = Net().cuda()
 # print(label_t)
 
 criterion = nn.MSELoss()
-optimizer = optim.SGD(net.parameters(), lr=0.3, momentum=0.9, nesterov=True)
+optimizer = optim.SGD(net.parameters(), lr=0.1, momentum=0.9, nesterov=True)
 # optimizer = optim.Adam(net.parameters(), lr=0.03)
 
 # batch_size = 1000
@@ -122,4 +123,3 @@ surf = ax3.plot_surface(X, Y, Z_out, cstride=1, cmap='jet')
 # plt.contour(X, Y, Z, 90, cmap='rainbow')  # 等高线图，要设置offset，为Z的最小值
 fig.colorbar(surf)
 plt.show()
-
